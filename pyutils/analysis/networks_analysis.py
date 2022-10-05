@@ -7,7 +7,7 @@ from pyutils.analysis.analyze_profiling_traces import RuntimeAnalyzer
 from pyutils.characterization.kernels.utils.checks import KernelsChecks
 from pyutils.characterization.networks.utils import VISION_NETWORKS, get_print_benchmark_name
 from pyutils.common.config import THIRTEEN_NODES
-from pyutils.common.data_interface import DataHandler, DataAttributes
+from pyutils.common.data_handlers.data_interface import DataHandler, DataAttributes
 from pyutils.common.experiments_utils import parse_dvfs_configs
 from pyutils.common.methods import to_latex
 from pyutils.common.paths import VISION_NETWORKS_PROFILING_OUTPUT_DIR, NETWORKS_CHARACTERIZATION_DIR

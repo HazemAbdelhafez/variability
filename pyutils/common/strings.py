@@ -58,6 +58,7 @@ S_LABEL = 'label'
 S_TIMING_METHOD = 'timing_method'
 S_CHARACTERIZE_CHILDREN_KERNELS = "characterize_children_kernels"
 S_CORE_AFFINITY = 'core_affinity'
+S_DISABLE_ASLR = "disable_aslr"
 S_NUM_ISOLATED_CORES = 'num_isolated_cores'
 S_NUM_THREADS = 'threads'
 S_CONTROL_SCENARIO = 'control_scenario'

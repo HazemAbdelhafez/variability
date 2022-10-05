@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 
 from pyutils.characterization.networks.utils import VISION_NETWORKS
 from pyutils.characterization.networks.utils import get_print_benchmark_name
-from pyutils.common.data_interface import DataAttributes, DataHandler
+from pyutils.common.data_handlers.data_interface import DataAttributes, DataHandler
 from pyutils.common.experiments_utils import parse_dvfs_configs
 from pyutils.common.paths import DATA_DIR, FIGURES_DIR
 from pyutils.common.plotting import PlottingHelpers

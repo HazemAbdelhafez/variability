@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 from pyutils.characterization.kernels.utils.checks import KernelsChecks
-from pyutils.common.data_interface import DataHandler
+from pyutils.common.data_handlers.data_interface import DataHandler
 from pyutils.common.strings import S_RUNTIME, S_POWER, S_KERNEL, S_LABEL
 from pyutils.common.utils import FileUtils
 from pyutils.modeling.helpers import ModelLoader, ModelSelectionFilter

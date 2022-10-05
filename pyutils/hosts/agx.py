@@ -13,7 +13,7 @@ from pyutils.common.utils import GlobalLogger
 
 JP5_RELEASE = "5.10.104-tegra"
 
-assert platform.release() == JP5_RELEASE
+# assert platform.release() == JP5_RELEASE
 
 logger = GlobalLogger().get_logger()
 
@@ -689,12 +689,14 @@ class ThermalMonitor:
 
 
 class FanController:
-    jp_5_fan_config_file = glob.glob("/sys/devices/platform/pwm-fan/hwmon/*/pwm1")[0]
+    @staticmethod
+    def get_config_file():
+        return glob.glob("/sys/devices/platform/pwm-fan/hwmon/*/pwm1")[0]
 
     @staticmethod
     def get_speed():
         if platform.release() == JP5_RELEASE:
-            return int(Utils.read_first_line_from_file(FanController.jp_5_fan_config_file))
+            return int(Utils.read_first_line_from_file(FanController.get_config_file()))
         return int(Utils.read_first_line_from_file("/sys/devices/pwm-fan/target_pwm"))
 
     @staticmethod
@@ -703,7 +705,7 @@ class FanController:
             # Newer JP 5
             if platform.release() == JP5_RELEASE:
                 os.system("systemctl stop nvfancontrol")
-                Utils.write_file(FanController.jp_5_fan_config_file, str(speed))
+                Utils.write_file(FanController.get_config_file(), str(speed))
             else:
                 Utils.write_file("/sys/devices/pwm-fan/target_pwm", str(speed))
 
@@ -938,6 +940,11 @@ class DVFSHelpers:
         else:
             p = os.path.join(DVFS_CONFIGS_DIR, dvfs_file)
         return Utils.read_file(p)
+
+    @staticmethod
+    def count_unique_dvfs_configs(df: pd.DataFrame) -> int:
+        return df[[S_CPU_FREQ, S_GPU_FREQ, S_MEMORY_FREQ]].apply(lambda x: DVFSHelpers.get_dvfs_config_id(
+            x), axis=1).unique().size
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import os
 import subprocess as sp
 from os.path import join as join_path
 
-from pyutils.common.strings import S_CORE_AFFINITY, S_NUM_ISOLATED_CORES, S_NUM_THREADS
+from pyutils.common.strings import S_CORE_AFFINITY, S_NUM_ISOLATED_CORES, S_NUM_THREADS, S_DISABLE_ASLR
 from pyutils.common.utils import GlobalLogger, FileUtils, TimeStamp
 from pyutils.hosts.agx import AGX_CPU_CORE_COUNT
 from pyutils.hosts.common import HOSTNAME
@@ -51,8 +51,8 @@ class PathsHandler:
 
     @staticmethod
     def get_python_remote_path():
-        if HOSTNAME == 'node-15':
-            return "/ssd/miniforge3/envs/cdev/bin/python"
+        # if HOSTNAME == 'node-15':
+        #     return "/ssd/miniforge3/envs/cdev/bin/python"
         return "/home/ubuntu/miniconda3/envs/mirage/bin/python"
 
     @staticmethod
@@ -94,6 +94,11 @@ class EnvHandler:
             os.environ['OMP_PLACES'] = '{' + ','.join([str(i) for i in range(starting_core_id,
                                                                              AGX_CPU_CORE_COUNT)]) + '}'
             os.environ['OMP_NUM_THREADS'] = str(job_config[S_NUM_THREADS])
+
+        # TODO: re-enable this
+        # if job_config[S_DISABLE_ASLR]:
+        #     # Read via: /proc/sys/kernel/randomize_va_space
+        #     os.system("sysctl -w kernel.randomize_va_space=0")
 
         # Set python path to avoid module not found exceptions.
         os.environ['PYTHONPATH'] = f"{os.getenv('PYTHONPATH')}:{PathsHandler.get_project_root_dir()}/pyutils"

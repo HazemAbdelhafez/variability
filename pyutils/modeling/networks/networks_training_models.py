@@ -1,5 +1,4 @@
 import os
-import os
 import traceback
 from os.path import join as join_path
 
@@ -13,7 +12,7 @@ from sklearn.model_selection import LeaveOneGroupOut, KFold
 from pyutils.analysis.common.data_transformers import Transformers
 from pyutils.analysis.common.error_metrics import Metrics, MetricPrettyName
 from pyutils.common.config import ALL_LABELS, ORIGINAL_LABELS, N_CPU_CORES, MINUTE_TIMESTAMP
-from pyutils.common.data_interface import DataAttributes, DataHandler
+from pyutils.common.data_handlers.data_interface import DataAttributes, DataHandler
 from pyutils.common.methods import get_metric
 from pyutils.common.paths import SAVED_MODELS_DIR
 from pyutils.common.strings import S_NODE_ID, S_NETWORK, S_RUNTIME_MS, S_RUNTIME, S_CHARACTERIZATION

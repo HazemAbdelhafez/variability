@@ -53,19 +53,19 @@ def factors(_n):
     return set(functools.reduce(list.__add__, seq))
 
 
-MEMORY_GB_PER_WORKER = 5
+MEMORY_GB_PER_WORKER = 8
 N_WORKERS = max(1, min(int(N_CPU_CORES / 20), int(MEMORY_LIMIT / MEMORY_GB_PER_WORKER)))
 THREADS_PER_WORKER = 20
-N_ROWS_PER_PARTITION = 50
-N_PARTITIONS = (5 * THREADS_PER_WORKER * N_WORKERS)
+N_ROWS_PER_PARTITION = 30
+N_PARTITIONS = (3 * THREADS_PER_WORKER * N_WORKERS)
 
 # USE_PROCESSES = True if 20 > N_JOBS > 10 else False
 USE_PROCESSES = False
 
 if USE_PROCESSES:
-    SCHEDULER = 'processes'
+    SCHEDULER = 'dask.distributed'
 else:
-    SCHEDULER = 'threads'
+    SCHEDULER = 'dask.distributed'
 
 
 class Timers:

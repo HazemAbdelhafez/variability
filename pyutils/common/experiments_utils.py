@@ -449,7 +449,7 @@ class VariabilityMetrics:
 class DVFSManager:
     def __init__(self, config):
         if type(config) is dict:
-            self.dvfs_config_idx = int(config[S_DVFS_CONFIG_IDX]) if S_DVFS_CONFIG_IDX in config.keys() else 3149
+            self.dvfs_config_idx = int(config[S_DVFS_CONFIG_IDX]) if S_DVFS_CONFIG_IDX in config.keys() else 0
             self.dvfs_configs_file_path = str(config[S_DVFS_CONFIG_FILE_PATH]) \
                 if S_DVFS_CONFIG_FILE_PATH in config.keys() else jp(DVFS_CONFIGS_DIR, 'dvfs_3150.json')
             self.control_scenario = 6 if S_CONTROL_SCENARIO not in config.keys() else int(config[S_CONTROL_SCENARIO])

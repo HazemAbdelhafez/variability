@@ -10,7 +10,7 @@ from joblib import Parallel, delayed
 from pyutils.analysis.common.error_metrics import Metrics
 from pyutils.characterization.networks.utils import VISION_NETWORKS as NETWORKS, get_print_benchmark_name
 from pyutils.common.config import N_CPU_CORES, S_DVFS_COLS
-from pyutils.common.data_interface import DataAttributes, DataHandler
+from pyutils.common.data_handlers.data_interface import DataAttributes, DataHandler
 from pyutils.common.experiments_utils import parse_dvfs_configs
 from pyutils.common.methods import is_runtime, to_latex, is_power
 from pyutils.common.paths import PREDICTION_FIGURES_DIR, NETWORKS_PREDICTION_DIR

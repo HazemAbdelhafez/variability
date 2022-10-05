@@ -1,6 +1,6 @@
 from os.path import join as jp
 
-from pyutils.characterization.networks.utils import VISION_NETWORKS, RODINIA_GPU_APPLICATIONS
+from pyutils.characterization.networks.utils import VISION_NETWORKS
 from pyutils.common.config import ALL_NODES
 from pyutils.common.paths import DATA_DIR, FIGURES_DIR
 from pyutils.common.strings import S_RUNTIME, S_POWER, S_KEEP_OBSERVATIONS, S_MIN_NUM_OBSERVATIONS, \
@@ -8,12 +8,13 @@ from pyutils.common.strings import S_RUNTIME, S_POWER, S_KEEP_OBSERVATIONS, S_MI
     S_KEEP_SUBMISSION_TIMESTAMP
 from pyutils.common.utils import TimeStamp, READABLE_MHDMY_DATE_FORMAT, FileUtils, prepare
 from pyutils.run.analysis.config import S_RUNTIME_NETWORKS, S_PWR_NETWORKS, S_NODES, S_FIGURE_NAME, \
-    S_OVERWRITE_COMBINED_DATA, S_OVERWRITE_PREPROCESSED_DATA, S_OVERWRITE_FIGURES, S_METRICS, S_PLOTTING, S_FONT, \
+    S_OVERWRITE_COMBINED_DATA, S_OVERWRITE_PREPROCESSED_DATA, S_OVERWRITE_FIGURES, S_METRICS, S_PLOTTING, \
+    S_FONT, \
     S_SMALL, S_MEDIUM, S_BIG, S_SUB_PLTS, S_FIG_SIZE, S_SHOWFLIERS, S_WHIS, S_EXCLUDE_LOWEST_CPU_FREQS, \
     S_FIGURES_DIR, S_TIMESTAMP, S_BENCHMARKS, S_OVERWRITE_SUMMARY, S_RECALCULATE_MEDIANS, \
     S_RECALCULATE_MEDIANS_DIFF, S_ABS_DIFF, S_FILTER_BY_TS, S_SELECTED_TS, S_SELECT_DVFS_CONFIG, \
     S_SELECTED_DVFS_CONFIGS, S_OVERWRITE_AGGREGATE, S_OVERWRITE_STATS, S_K_AD_FIGURE_NAME, \
-    S_ROBUST_D_FIGURE_NAME
+    S_ROBUST_D_FIGURE_NAME, S_INDIVIDUAL_PLOTS
 
 ANALYSIS_JOBS_CONFIGS_DIR = jp(DATA_DIR, 'analysis-jobs')
 INTRA_NODE_CONFIGS_DIR = jp(ANALYSIS_JOBS_CONFIGS_DIR, 'intra-node-variability')
@@ -46,8 +47,8 @@ def update_post_job(p, new_val):
 def create_inter_node_variability_jb_cfg(ts):
     p = jp(INTER_NODE_CONFIGS_DIR, f"inter_node_variability_{ts}.json")
     jb_cfg = dict()
-    jb_cfg[S_RUNTIME_NETWORKS] = ['mnasnet', 'shufflenetv2']
-    jb_cfg[S_PWR_NETWORKS] = ['vgg', 'shufflenetv2']
+    jb_cfg[S_RUNTIME_NETWORKS] = ['mobilenetv2']
+    jb_cfg[S_PWR_NETWORKS] = ["mobilenetv2"]
 
     jb_cfg[S_NODES] = ALL_NODES
     jb_cfg[S_TIMESTAMP] = ts
@@ -75,8 +76,8 @@ def create_inter_node_variability_jb_cfg(ts):
 def create_intra_node_variability_jb_cfg(ts):
     p = jp(INTRA_NODE_CONFIGS_DIR, f"intra_node_variability_{ts}.json")
     jb_cfg = dict()
-    jb_cfg[S_RUNTIME_NETWORKS] = ['alexnet']
-    jb_cfg[S_PWR_NETWORKS] = ['alexnet']
+    jb_cfg[S_RUNTIME_NETWORKS] = ['mobilenetv2']
+    jb_cfg[S_PWR_NETWORKS] = ['mobilenetv2']
 
     jb_cfg[S_NODES] = ALL_NODES
     jb_cfg[S_FIGURE_NAME] = f'intra_node_variability_{ts}.png'
@@ -103,57 +104,9 @@ def create_network_variability_jb_cfg(ts):
     p = prepare(BENCHMARKS_VARIABILITY_CONFIGS_DIR, TimeStamp.parse_timestamp(ts), f"variability_{ts}.json")
     jb_cfg = dict()
     jb_cfg[S_TIMESTAMP] = ts
-    # jb_cfg[S_BENCHMARKS] = VISION_NETWORKS
-    jb_cfg[S_BENCHMARKS] = ["googlenet"]
-    jb_cfg[S_METRICS] = [S_POWER, S_RUNTIME]
-
-    jb_cfg[S_NODES] = ALL_NODES
-    jb_cfg[S_FIGURE_NAME] = f'variability_{ts}.png'
-    jb_cfg[S_K_AD_FIGURE_NAME] = f'k_ad_{ts}.png'
-    jb_cfg[S_ROBUST_D_FIGURE_NAME] = f'robust_d_{ts}.png'
-
-    jb_cfg[S_OVERWRITE_AGGREGATE] = False
-    jb_cfg[S_OVERWRITE_COMBINED_DATA] = False
-    jb_cfg[S_OVERWRITE_SUMMARY] = False
-    jb_cfg[S_RECALCULATE_MEDIANS] = False
-    jb_cfg[S_RECALCULATE_MEDIANS_DIFF] = False
-    jb_cfg[S_OVERWRITE_STATS] = False
-
-    jb_cfg[S_ABS_DIFF] = False
-    jb_cfg[S_EXCLUDE_LOWEST_CPU_FREQS] = True
-    jb_cfg[S_LIMIT_NUM_OBSERVATIONS] = False
-    jb_cfg[S_MIN_NUM_OBSERVATIONS] = {S_RUNTIME: 50, S_POWER: 50}
-
-    # Benchmark specific configs
-    tmp = dict()
-    for bm in jb_cfg.get(S_BENCHMARKS):
-        tmp[bm] = False
-    jb_cfg[S_FILTER_BY_TS] = tmp
-
-    tmp = dict()
-    for bm in jb_cfg.get(S_BENCHMARKS):
-        tmp[bm] = []
-    jb_cfg[S_SELECTED_TS] = tmp
-
-    jb_cfg[S_KEEP_OBSERVATIONS] = True
-
-    # Plotting
-    jb_cfg[S_PLOTTING] = dict()
-    jb_cfg[S_PLOTTING][S_FONT] = {S_SMALL: 16, S_MEDIUM: 18, S_BIG: 20}
-    jb_cfg[S_PLOTTING].update({S_FIG_SIZE: (15, 7)})
-    jb_cfg[S_PLOTTING].update({S_WHIS: [0, 100]})
-    jb_cfg[S_PLOTTING][S_SHOWFLIERS] = False
-
-    return jb_cfg, p
-
-
-def create_benchmark_variability_jb_cfg(ts):
-    p = prepare(BENCHMARKS_VARIABILITY_CONFIGS_DIR, TimeStamp.parse_timestamp(ts), f"variability_{ts}.json")
-
-    jb_cfg = dict()
-    jb_cfg[S_TIMESTAMP] = ts
-    jb_cfg[S_BENCHMARKS] = RODINIA_GPU_APPLICATIONS
+    jb_cfg[S_BENCHMARKS] = ["mobilenetv2", "squeezenet", "resnet", "alexnet", "shufflenet_v2_x1_0"]
     jb_cfg[S_METRICS] = [S_RUNTIME]
+    jb_cfg[S_INDIVIDUAL_PLOTS] = False
 
     jb_cfg[S_NODES] = ALL_NODES
     jb_cfg[S_FIGURE_NAME] = f'variability_{ts}.png'
@@ -171,12 +124,6 @@ def create_benchmark_variability_jb_cfg(ts):
     jb_cfg[S_EXCLUDE_LOWEST_CPU_FREQS] = True
     jb_cfg[S_LIMIT_NUM_OBSERVATIONS] = False
     jb_cfg[S_MIN_NUM_OBSERVATIONS] = {S_RUNTIME: 50, S_POWER: 50}
-
-    # Benchmark specific configs
-    # jb_cfg[S_FILTER_BY_TS] = {'lud': True, 'huffman': True, 'hotspot3d': True, 'lud_omp': True, 'kmeans_cuda': False,
-    #                           'nw': True, 'bfs': False}
-    # jb_cfg[S_SELECTED_TS] = {'lud': ['2030082021'], 'huffman': ['1128082021'], 'hotspot3d': ['1129082021'],
-    #                          'lud_omp': ['1927082021'], 'kmeans_cuda': [], 'nw': ['1230082021']}
 
     # Benchmark specific configs
     tmp = dict()
@@ -274,4 +221,4 @@ def create_variability_rca_jb_cfg(ts):
 
 
 if __name__ == '__main__':
-    encapsulate_calls(create_benchmark_variability_jb_cfg)
+    pass

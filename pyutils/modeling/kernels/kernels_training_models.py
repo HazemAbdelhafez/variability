@@ -21,7 +21,7 @@ from pyutils.analysis.common.data_transformers import Transformers
 from pyutils.analysis.common.error_metrics import Metrics
 from pyutils.characterization.common.parameters import BaseParameters
 from pyutils.common.config import ALL_LABELS, ORIGINAL_LABELS, N_CPU_CORES, HOSTNAME, HOUR_TIMESTAMP
-from pyutils.common.data_interface import DataAttributes, DataHandler
+from pyutils.common.data_handlers.data_interface import DataAttributes, DataHandler
 from pyutils.common.methods import get_metric
 from pyutils.common.paths import SAVED_MODELS_DIR
 from pyutils.common.strings import S_NODE_ID, S_RUNTIME_MS, S_RUNTIME, S_DVFS_CONFIG, S_KERNEL_PARAMETERS, \

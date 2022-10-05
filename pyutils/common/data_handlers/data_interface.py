@@ -8,8 +8,8 @@ from os.path import join as jp
 import numpy as np
 import pandas as pd
 
-from characterization.common.types import KernelParameters
-from characterization.networks.properties import Parameters
+from pyutils.characterization.common.types import KernelParameters
+from pyutils.characterization.networks.properties import Parameters
 from pyutils.characterization.kernels.utils.checks import KernelsChecks, is_kernel
 from pyutils.characterization.kernels.utils.loaders import KernelsLoaders
 from pyutils.characterization.networks.utils import get_unified_benchmark_name, is_network

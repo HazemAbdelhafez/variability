@@ -182,6 +182,12 @@ def benchmark_characterization(cfg, report_end=True):
     loop_timer = StopWatch()
 
     dvfs_idx = 0
+    if HostsHandler.get_local_hostname() == "node-05":
+        dvfs_idx = 216
+    elif HostsHandler.get_local_hostname() == "node-12":
+        dvfs_idx = 272
+    else:
+        dvfs_idx = 0
     tmp_config = copy.copy(cfg)
     Logging.write_and_send("Staring profiling iterations.", local_status_file)
     while dvfs_idx < len(dvfs_config_indexes):

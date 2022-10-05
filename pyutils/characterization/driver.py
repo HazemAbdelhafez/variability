@@ -4,6 +4,7 @@ import os
 import sys
 import traceback
 import warnings
+import psutil
 
 from pyutils.characterization.common.utils import parse_measurement_args, parse_parameters, \
     load_module_and_input, calculate_block_size, MAX_BLOCK_SIZE, get_output_file_path
@@ -24,6 +25,14 @@ logger_obj.set_out_file(join(LOGGING_DIR, "jobs", "run", f"job_{TimeStamp.get_mi
 logger = logger_obj.get_logger()
 
 warnings.filterwarnings("ignore")
+
+
+def get_env_data():
+    pid = os.getpid()
+    p = psutil.Process(pid)
+    env_vars = p.environ()
+    mem_mapping = p.memory_maps(grouped=False)
+    return {"pid": pid, "environment_variables": env_vars, "memory_maps": mem_mapping}
 
 
 def characterize_model_time(config: dict):
@@ -122,6 +131,10 @@ def characterize_model_time(config: dict):
 
     # Save kernel parameters
     experiment_data_manager.save_module_parameters(params)
+
+    # Save extra data
+    # env_data = get_env_data()
+    # experiment_data_manager.save_extra_config(env_data)
 
     # Create experiment output data directory
     output_path = get_output_file_path(args)

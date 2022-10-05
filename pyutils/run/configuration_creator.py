@@ -9,10 +9,12 @@ from pyutils.common.strings import S_METRIC, S_RUNTIME, S_BENCHMARK, \
     S_EXP_NOTES, S_WARMUP_ITERATIONS, S_PWR_SMPLG_RATE, \
     S_INTERNAL_PWR_METER, S_TIMING_METHOD, S_CORE_AFFINITY, \
     S_NUM_ISOLATED_CORES, S_CONTROL_SCENARIO, S_NUM_OBSERVATIONS, S_BLOCK_RUNTIME_MS, S_BLOCK_SIZE, S_RME, \
-    S_CONFIDENCE_LVL, S_RECORD_DATA, S_DVFS_CONFIG_FILE_PATH, S_PWR_METER, S_SUBMISSION_TIMESTAMP, S_SKIP_SEEN_BEFORE, \
+    S_CONFIDENCE_LVL, S_RECORD_DATA, S_DVFS_CONFIG_FILE_PATH, S_PWR_METER, S_SUBMISSION_TIMESTAMP, \
+    S_SKIP_SEEN_BEFORE, \
     S_NUM_RESTARTS, S_DISCARDED_RESTARTS, \
-    S_EXP_TIMEOUT_DURATION, S_MAX_NUM_RETRIES, S_GRAPH_SIZE, S_CHECK_RME, S_CHARACTERIZE_CHILDREN_KERNELS, S_POWER, \
-    S_PARAMETERS
+    S_EXP_TIMEOUT_DURATION, S_MAX_NUM_RETRIES, S_GRAPH_SIZE, S_CHECK_RME, S_CHARACTERIZE_CHILDREN_KERNELS, \
+    S_POWER, \
+    S_PARAMETERS, S_DISABLE_ASLR
 from pyutils.common.utils import FileUtils, TimeStamp, MHDMY_DATE_FORMAT, READABLE_MHDMY_DATE_FORMAT
 from pyutils.run.config import S_DVFS_CONFIGS
 from pyutils.run.config import S_THREADS
@@ -32,6 +34,8 @@ def create_vision_networks_job_config(bm='mobilenetv2'):
     job_config[S_METRIC] = S_RUNTIME
     job_config[S_SKIP_SEEN_BEFORE] = False
     job_config[S_CHARACTERIZE_CHILDREN_KERNELS] = False
+
+    job_config[S_DISABLE_ASLR] = True
 
     job_config = add_runtime_config(job_config)
     job_config = add_power_config(job_config)
@@ -127,7 +131,7 @@ if __name__ == '__main__':
     if len(sys.argv) >= 2:
         _bm = str(sys.argv[1])
     else:
-        _bm = "alexnet"
+        _bm = "mobilenetv2"
 
     if len(sys.argv) >= 3:
         _target = str(sys.argv[2])

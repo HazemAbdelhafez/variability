@@ -13,7 +13,7 @@ from typing import List
 import pandas as pd
 
 from pyutils.common.methods import join
-from pyutils.common.paths import PROJECT_DIR, CACHE_DIR
+from pyutils.common.paths import PROJECT_DIR, CACHE_DIR, FIGURES_DIR
 
 from pyutils.common.methods import json_convert
 
@@ -309,3 +309,11 @@ def create_cache(*args, clear=False):
 
 if __name__ == '__main__':
     pass
+
+
+def get_figures_dir_path(file_name: str):
+    return get_pymodule_dir_path(FIGURES_DIR, file_name)
+
+
+def get_tmp_dir_path(file_name: str):
+    return get_pymodule_dir_path("/tmp", file_name)

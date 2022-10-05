@@ -2,13 +2,12 @@ from typing import Dict, List, Union
 
 import pandas as pd
 
-from pyutils.characterization.networks.utils import VISION_NETWORKS, get_unified_benchmark_name, \
-    get_print_benchmark_name
+from pyutils.characterization.networks.utils import VISION_NETWORKS, get_print_benchmark_name
 from pyutils.common.utils import create_cache
 from pyutils.characterization.common.parameters import BaseParameters
 from pyutils.characterization.networks.analyzers import stack_trace as nw_stack_trace
 from pyutils.common.config import S_DVFS_COLS
-from pyutils.common.data_interface import DataAttributes, DataHandler
+from pyutils.common.data_handlers.data_interface import DataAttributes, DataHandler
 from pyutils.common.methods import check_nan
 from pyutils.common.strings import S_RUNTIME, S_KERNEL, S_RUNTIME_MS, S_CHARACTERIZATION, S_PARAMETERS, \
     S_BENCHMARK, S_DVFS_CONFIG
